@@ -1,0 +1,22 @@
+{
+  "presets": [
+    "env"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@deushack/colors": "./source/@deushack/colors",
+          "@deushack/styles": "./source/@deushack/styles",
+          "@deushack/elements": "./source/@deushack/elements",
+          "@deushack/pages": "./source/@deushack/pages",
+          "@deushack/ui": "./source/@deushack/ui"
+        }
+      }
+    ],
+    "transform-object-rest-spread",
+    "transform-runtime",
+    "external-helpers"
+  ]
+}
