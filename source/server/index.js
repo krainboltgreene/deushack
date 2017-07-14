@@ -21,11 +21,11 @@ application.use(compression())
 application.use(helmet())
 application.use(express.static(join(__dirname, "..", "client")))
 
-application.get("*", function get (request: any, response: any): string {
-  const html = "<p>Test</p>"
-
-  return response.send(html)
-})
+// Application.get("*", function get (request, response) {
+//   Const html = "<p>Test</p>"
+//
+//   Return response.send(html)
+// })
 
 application.listen(
   process.env.PORT,

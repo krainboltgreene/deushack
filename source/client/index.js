@@ -1,17 +1,12 @@
 import "babel-polyfill"
+import {run} from "@cycle/run"
 
 import environment from "./environment"
-
-const REFRESH_WAIT_TIME = 900000
+import cycle from "./cycle"
+import drivers from "./drivers"
 
 window.env = environment(
   [...document.querySelectorAll("meta[type='environment']")]
 )
 
-
-return render(
-  <Provider store={store}>
-    <Application />
-  </Provider>,
-  document.getElementById("application")
-)
+run(cycle, drivers)

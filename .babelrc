@@ -11,6 +11,7 @@
           "@deushack/styles": "./source/@deushack/styles",
           "@deushack/elements": "./source/@deushack/elements",
           "@deushack/pages": "./source/@deushack/pages",
+          "@deushack/view": "./source/@deushack/view",
           "@deushack/ui": "./source/@deushack/ui"
         }
       }
