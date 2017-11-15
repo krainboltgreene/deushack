@@ -1,8 +1,7 @@
-import {reduce} from "ramda"
+import reduceValues from "@unction/reducevalues"
 
-// TODO: Replace with unction/reduce
-export default reduce(
-  (previous, element) => {
+export default reduceValues(
+  (previous) => (element) => {
     if (element.getAttribute("type") !== "environment") {
       return previous
     }
@@ -11,6 +10,7 @@ export default reduce(
       ...previous,
       [element.getAttribute("name")]: element.getAttribute("content"),
     }
-  },
-  {},
+  }
+)(
+  {}
 )

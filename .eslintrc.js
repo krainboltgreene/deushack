@@ -1,18 +1,72 @@
 module.exports = {
   parser: "babel-eslint",
   plugins: [
-    "fp",
+    "babel",
+    "immutable",
+    "import",
     "promise"
   ],
   env: {
     es6: true,
-    browser: true,
-    node: true
+    node: true,
+    browser: true
   },
   rules: {
+    "babel/new-cap": "error",
+    "babel/no-invalid-this": "error",
+    "babel/object-curly-spacing": "error",
+    "babel/semi": "off", // No thanks
+    "immutable/no-let": "error",
+    "immutable/no-mutation": "warn",
+    "immutable/no-this": "error",
+    "import/default": "error",
+    "import/export": "error",
+    "import/exports-last": "error",
+    "import/extensions": "error",
+    "import/first": "error",
+    "import/max-dependencies": "off", // It's not really worth anything
+    "import/named": "error",
+    "import/namespace": "error",
+    "import/newline-after-import": "error",
+    "import/no-absolute-path": "error",
+    "import/no-amd": "error",
+    "import/no-anonymous-default-export": "error",
+    "import/no-commonjs": "error",
+    "import/no-deprecated": "error",
+    "import/no-duplicates": "off", // This rule doesn't understand my style
+    "import/no-dynamic-require": "error",
+    "import/no-extraneous-dependencies": "off", // Until they figure out internal modules
+    "import/no-internal-modules": "error",
+    "import/no-mutable-exports": "error",
+    "import/no-named-as-default-member": "error",
+    "import/no-named-as-default": "error",
+    "import/no-named-default": "error",
+    "import/no-namespace": "error",
+    "import/no-nodejs-modules": "off", // Only for frontend
+    "import/no-restricted-paths": "error",
+    "import/no-unassigned-import": "error",
+    "import/no-unresolved": "off", // Until they figure out internal modules
+    "import/no-webpack-loader-syntax": "error",
+    "import/order": "error",
+    "import/prefer-default-export": "error",
+    "import/unambiguous": "error",
+    "promise/always-return": "error",
+    "promise/avoid-new": "error",
+    "promise/catch-or-return": "error",
+    "promise/no-callback-in-promise": "error",
+    "promise/no-native": "off", // We have babel
+    "promise/no-nesting": "error",
+    "promise/no-promise-in-callback": "error",
+    "promise/no-return-in-finally": "error",
+    "promise/no-return-wrap": "error",
+    "promise/param-names": "error",
+    "promise/prefer-await-to-callbacks": "off", // Not convinced of await/async
+    "promise/prefer-await-to-then": "off", // Not convinced of await/async
     "accessor-pairs": "error",
+    "array-bracket-newline": ["error", "always"],
     "array-bracket-spacing": "error",
     "array-callback-return": "error",
+    "array-element-newline": "error",
     "arrow-body-style": "off", // Weird style
     "arrow-parens": "error",
     "arrow-spacing": "error",
@@ -22,7 +76,8 @@ module.exports = {
     "callback-return": "error",
     "camelcase": "warn",
     "capitalized-comments": "error",
-    "class-methods-use-this": ["error", {exceptMethods: ["componentDidMount", "componentDidUpdate", "componentWillMount", "componentWillReceiveProps", "componentWillUnmount", "componentWillUpdate", "render", "shouldComponentUpdate"]}],
+    "capitalized-comments": "off",
+    "class-methods-use-this": "error",
     "comma-dangle": ["error", "always-multiline"],
     "comma-spacing": "error",
     "comma-style": "error",
@@ -37,28 +92,14 @@ module.exports = {
     "dot-notation": "error",
     "eol-last": "error",
     "eqeqeq": "error",
-    "fp/no-arguments": "error",
-    "fp/no-class": "error",
-    "fp/no-delete": "error",
-    "fp/no-events": "error",
-    "fp/no-get-set": "error",
-    "fp/no-let": "error",
-    "fp/no-loops": "error",
-    "fp/no-mutating-assign": "error",
-    "fp/no-mutating-methods": "error",
-    "fp/no-mutation": "error",
-    "fp/no-nil": "error",
-    "fp/no-proxy": "error",
-    "fp/no-rest-parameters": "error",
-    "fp/no-this": "error",
-    "fp/no-throw": "error",
-    "fp/no-unused-expression": "error",
-    "fp/no-valueof-field": "error",
+    "for-direction": "error",
     "func-call-spacing": "error",
     "func-name-matching": "error",
     "func-names": "error",
     "func-style": ["error", "expression", {allowArrowFunctions: true}],
+    "function-paren-newline": ["error", "consistent"],
     "generator-star-spacing": "error",
+    "getter-return": "error",
     "global-require": "error",
     "guard-for-in": "error",
     "handle-callback-err": "error",
@@ -67,19 +108,22 @@ module.exports = {
     "id-match": "error",
     "indent": ["error", 2, {"SwitchCase": 1}],
     "init-declarations": "error",
+    "jsx-quotes": "error",
     "key-spacing": "error",
     "keyword-spacing": "error",
     "line-comment-position": "error",
     "linebreak-style": ["error", "unix"],
     "lines-around-comment": "error",
     "lines-around-directive": "error",
+    "lines-between-class-members": "error",
     "max-depth": "error",
     "max-len": "off", // Causes more work than anything else
     "max-lines": "warn",
     "max-nested-callbacks": "error",
     "max-params": "error",
     "max-statements-per-line": "error",
-    "max-statements": "warn",
+    "max-statements": "error",
+    "multiline-comment-style": "off", // Not worth the pain
     "multiline-ternary": ["error", "never"],
     "new-cap": "error",
     "new-parens": "error",
@@ -89,7 +133,8 @@ module.exports = {
     "no-alert": "error",
     "no-array-constructor": "error",
     "no-await-in-loop": "error",
-    "no-bitwise": "warn",
+    "no-bitwise": "off", // Doesn't work with pipes
+    "no-buffer-constructor": "error",
     "no-caller": "error",
     "no-case-declarations": "error",
     "no-catch-shadow": "error",
@@ -167,7 +212,7 @@ module.exports = {
     "no-path-concat": "error",
     "no-plusplus": "error",
     "no-process-env": "off", // What a stupid rule
-    "no-process-exit": "error",
+    "no-process-exit": "off", // What a stupid rule
     "no-proto": "error",
     "no-prototype-builtins": "error",
     "no-redeclare": "error",
@@ -217,7 +262,7 @@ module.exports = {
     "no-useless-return": "error",
     "no-var": "error",
     "no-void": "error",
-    "no-warning-comments": "error",
+    "no-warning-comments": "off", // I use todos
     "no-whitespace-before-property": "error",
     "no-with": "error",
     "nonblock-statement-body-position": "error",
@@ -228,9 +273,11 @@ module.exports = {
     "one-var-declaration-per-line": "error",
     "one-var": ["error", "never"],
     "operator-assignment": "error",
-    "operator-linebreak": "error",
+    "operator-linebreak": "off", // Doesn't work with pipes
+    "padded-blocks": "error",
     "padded-blocks": ["error", "never"],
-    "prefer-arrow-callback": "off", // This really isn't an appropriate rule
+    "padding-line-between-statements": "error",
+    "prefer-arrow-callback": "error",
     "prefer-const": "error",
     "prefer-destructuring": "error",
     "prefer-numeric-literals": "error",
@@ -239,17 +286,6 @@ module.exports = {
     "prefer-rest-params": "error",
     "prefer-spread": "error",
     "prefer-template": "error",
-    "promise/always-return": "error",
-    "promise/avoid-new": "error",
-    "promise/catch-or-return": "error",
-    "promise/no-callback-in-promise": "error",
-    "promise/no-native": "off", // We have babel
-    "promise/no-nesting": "error",
-    "promise/no-promise-in-callback": "error",
-    "promise/no-return-wrap": "error",
-    "promise/param-names": "error",
-    "promise/prefer-await-to-callbacks": "off", // Not convinced of await/async
-    "promise/prefer-await-to-then": "off", // Not convinced of await/async
     "quote-props": ["error", "consistent-as-needed", {keywords: true}],
     "quotes": "error",
     "radix": "error",
@@ -258,9 +294,10 @@ module.exports = {
     "require-yield": "error",
     "rest-spread-spacing": "error",
     "semi-spacing": "error",
+    "semi-style": "error",
     "semi": ["error", "never"],
-    "sort-imports": "off", // I don't like making busy work for myself
-    "sort-keys": "off", // I don't like making busy work for myself
+    "sort-imports": "off", // Not worth the hassle
+    "sort-keys": "off", // So fucking stupid
     "sort-vars": "off", // I don't like making busy work for myself
     "space-before-blocks": "error",
     "space-before-function-paren": "error",
@@ -269,6 +306,7 @@ module.exports = {
     "space-unary-ops": "error",
     "spaced-comment": "error",
     "strict": ["error", "never"],
+    "switch-colon-spacing": "error",
     "symbol-description": "error",
     "template-curly-spacing": "error",
     "template-tag-spacing": "error",
@@ -280,6 +318,6 @@ module.exports = {
     "wrap-iife": "error",
     "wrap-regex": "error",
     "yield-star-spacing": "error",
-    "yoda": "error"
+    "yoda": "error",
   }
 }

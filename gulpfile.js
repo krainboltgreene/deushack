@@ -1,21 +1,20 @@
-/* eslint-disable import/no-commonjs, node/no-unpublished-require, import/max-dependencies, flowtype/require-return-type */
+/* eslint-disable import/no-commonjs, node/no-unpublished-require */
 const {join} = require("path")
 const gulp = require("gulp")
 const gulpConcat = require("gulp-concat")
 const gulpMyth = require("gulp-myth")
 const gulpSize = require("gulp-size")
-const gulpGzip = require("gulp-gzip")
 const gulpBabel = require("gulp-babel")
+const gulpGzip = require("gulp-gzip")
 const browserify = require("browserify")
 const babelify = require("babelify")
 const envify = require("envify")
 const vinylSourceStream = require("vinyl-source-stream")
 const vinylBuffer = require("vinyl-buffer")
 const gulpChanged = require("gulp-changed")
-const gulpUglify = require("gulp-uglify")
 const {production} = require("gulp-environments")
 
-const DESINATION = "./transpiled/"
+const DESINATION = "./tmp/"
 const GZIP = {
   append: true,
   threshold: true,
@@ -25,23 +24,24 @@ const GZIP = {
   },
 }
 
-
-gulp.task("build:@deushack", () => {
-  const destination = join(DESINATION, "@deushack")
+gulp.task("build:@internal", () => {
+  const destination = join(DESINATION, "@internal")
 
   return gulp.src([
-    "./source/@deushack/**/*.js",
+    "./source/@internal/**/*.js",
   ])
     .pipe(gulpChanged(destination))
     .pipe(gulpBabel())
     .pipe(gulpSize({
-      title: "@deushack",
+      title: "@internal",
       showFiles: true,
     }))
     .pipe(gulp.dest(destination))
 })
 
-gulp.task("build:server", ["build:@deushack"], () => {
+gulp.task("build:server", [
+  "build:@internal",
+], () => {
   const destination = join(DESINATION, "server")
 
   return gulp.src([
@@ -54,89 +54,74 @@ gulp.task("build:server", ["build:@deushack"], () => {
       showFiles: true,
     }))
     .pipe(gulp.dest(destination))
+    .pipe(production(gulpGzip(GZIP)))
+    .pipe(production(gulp.dest(destination)))
 })
 
-gulp.task("build:client", ["build:styles", "build:images", "build:assets", "build:fonts"], () => {
+gulp.task("build:client", [
+  "build:styles",
+  "build:images",
+  "build:assets",
+  "build:fonts",
+], () => {
   const destination = join(DESINATION, "client")
 
   return browserify({
     entries: "./source/client/index.js",
     transform: [
-      [babelify, {ignore: "./source/**/test.js"}],
+      [
+        babelify,
+        {ignore: "./source/**/test.js"},
+      ],
       envify,
     ],
   })
     .bundle()
     .pipe(vinylSourceStream("index.js"))
     .pipe(vinylBuffer())
-    .pipe(production(gulpUglify()))
-    .pipe(production(gulp.dest(destination)))
-    .pipe(production(gulpGzip(GZIP)))
     .pipe(gulpSize({
       title: "client",
       showFiles: true,
     }))
     .pipe(gulp.dest(destination))
+    .pipe(production(gulp.dest(destination)))
+    .pipe(production(gulpGzip(GZIP)))
 })
 
 gulp.task("build:styles", () => {
   const destination = join(DESINATION, "client")
 
   return gulp.src([
-    "./node_modules/font-awesome/css/font-awesome.css",
-    "./node_modules/normalize.css/normalize.css",
-    "./node_modules/skeleton-css/css/skeleton.css",
-    "./source/client/index.css",
+    "./source/assets/styles/*",
   ])
     .pipe(gulpChanged(destination))
     .pipe(gulpConcat("index.css"))
     .pipe(gulpMyth())
-    .pipe(production(gulp.dest(destination)))
-    .pipe(production(gulpGzip(GZIP)))
     .pipe(gulpSize({
       title: "styles",
       showFiles: true,
     }))
     .pipe(gulp.dest(destination))
+    .pipe(production(gulp.dest(destination)))
+    .pipe(production(gulpGzip(GZIP)))
 })
 
 gulp.task("build:images", () => {
   const destination = join(DESINATION, "client")
 
   return gulp.src([
-    "./source/images/*.png",
-    "./source/images/*.ico",
+    "./source/assets/images/*.png",
+    "./source/assets/images/*.ico",
   ])
     .pipe(gulpChanged(destination))
-    .pipe(production(gulp.dest(destination)))
-    .pipe(production(gulpGzip(GZIP)))
     .pipe(gulpSize({
       title: "images",
       showFiles: true,
     }))
     .pipe(gulp.dest(destination))
-})
-
-gulp.task("build:assets", () => {
-  const destination = join(DESINATION, "client")
-
-  return gulp.src([
-    "./source/assets/browserconfig.xml",
-    "./source/assets/manifest.json",
-    "./source/assets/loadtestertool.xml",
-    "./source/assets/babel-helpers.js",
-    "./source/assets/index.html",
-  ])
-    .pipe(gulpChanged(destination))
-    .pipe(production(gulp.dest(destination)))
     .pipe(production(gulpGzip(GZIP)))
-    .pipe(gulpSize({
-      title: "assets",
-      showFiles: true,
-    }))
-    .pipe(gulp.dest(destination))
+    .pipe(production(gulp.dest(destination)))
 })
-
 gulp.task("build:fonts", () => {
   const destination = join(DESINATION, "client", "fonts")
 
@@ -144,18 +129,59 @@ gulp.task("build:fonts", () => {
     "./node_modules/font-awesome/fonts/**/*",
   ])
     .pipe(gulpChanged(destination))
-    .pipe(production(gulp.dest(destination)))
-    .pipe(production(gulpGzip(GZIP)))
     .pipe(gulpSize({
       title: "fonts",
       showFiles: true,
     }))
     .pipe(gulp.dest(destination))
+    .pipe(production(gulpGzip(GZIP)))
+    .pipe(production(gulp.dest(destination)))
 })
 
-gulp.task("build:all", ["build:server", "build:client"])
-gulp.task("watch:all", ["build:server", "build:client"], () => {
-  gulp.watch("./source/server/**/*", ["build:server"])
-  gulp.watch("./source/client/**/*", ["build:client"])
-  gulp.watch("./source/@deushack/**/*", ["build:server", "build:client"])
+gulp.task("build:assets", () => {
+  const destination = join(DESINATION, "client")
+
+  return gulp.src([
+    "./source/assets/metadata/*",
+    "./source/assets/scripts/*.js",
+  ])
+    .pipe(gulpChanged(destination))
+    .pipe(gulpSize({
+      title: "assets",
+      showFiles: true,
+    }))
+    .pipe(gulp.dest(destination))
+    .pipe(production(gulpGzip(GZIP)))
+    .pipe(production(gulp.dest(destination)))
 })
+
+gulp.task(
+  "build:all"
+  ,
+  [
+    "build:server",
+    "build:client",
+  ]
+)
+gulp.task(
+  "watch:all",
+  [
+    "build:server",
+    "build:client",
+  ],
+  () => {
+    gulp.watch("./source/server/**/*", [
+      "build:server",
+    ])
+    gulp.watch("./source/client/**/*", [
+      "build:client",
+    ])
+    gulp.watch("./source/assets/**/*", [
+      "build:client",
+    ])
+    gulp.watch("./source/@internal/**/*", [
+      "build:server",
+      "build:client",
+    ])
+  }
+)

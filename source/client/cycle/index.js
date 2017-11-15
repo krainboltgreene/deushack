@@ -1,10 +1,16 @@
-import xs from "xstream"
-import view from "@deushack/view"
+import key from "@unction/key"
+import mapValues from "@unction/mapvalues"
+import {infuse} from "snabbdom-view"
 
-import initialState from "./initialState"
+import {shell} from "@internal/ui"
 
-const state$ = xs.of(initialState())
+import stateFrom from "./stateFrom"
+import domEvents from "./domEvents"
 
-export default function cycle () {
-  return {DOM: state$.map(view)}
+export default function cycle (sources) {
+  const DOM = key("DOM")(sources)
+
+  const state = stateFrom(domEvents(DOM))
+
+  return {DOM: mapValues(infuse(shell))(state)}
 }

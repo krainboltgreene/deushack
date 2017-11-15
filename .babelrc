@@ -1,4 +1,11 @@
 {
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  },
   "presets": [
     "env"
   ],
@@ -7,16 +14,19 @@
       "module-resolver",
       {
         "alias": {
-          "@deushack/colors": "./source/@deushack/colors",
-          "@deushack/styles": "./source/@deushack/styles",
-          "@deushack/elements": "./source/@deushack/elements",
-          "@deushack/pages": "./source/@deushack/pages",
-          "@deushack/view": "./source/@deushack/view",
-          "@deushack/ui": "./source/@deushack/ui"
+          "@internal/colors": "./source/@internal/colors",
+          "@internal/elements": "./source/@internal/elements",
+          "@internal/logger": "./source/@internal/logger",
+          "@internal/pages": "./source/@internal/pages",
+          "@internal/route": "./source/@internal/route",
+          "@internal/styles": "./source/@internal/styles",
+          "@internal/ui": "./source/@internal/ui",
+          "@internal/validations": "./source/@internal/validations"
         }
       }
     ],
     "transform-object-rest-spread",
+    "pipe-operator-curry",
     "transform-runtime",
     "external-helpers"
   ]
