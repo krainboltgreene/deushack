@@ -5,12 +5,16 @@ import {infuse} from "snabbdom-view"
 import {shell} from "@internal/ui"
 
 import stateFrom from "./stateFrom"
-import domEvents from "./domEvents"
+import events from "./events"
 
 export default function cycle (sources) {
   const DOM = key("DOM")(sources)
 
-  const state = stateFrom(domEvents(DOM))
+  events(DOM).debug()
 
-  return {DOM: mapValues(infuse(shell))(state)}
+  const state = stateFrom(events(DOM))
+
+  state.debug()
+
+  return {DOM: state.map(infuse(shell))}
 }

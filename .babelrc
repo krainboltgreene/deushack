@@ -16,6 +16,7 @@
         "alias": {
           "@internal/colors": "./source/@internal/colors",
           "@internal/elements": "./source/@internal/elements",
+          "@internal/intents": "./source/@internal/intents",
           "@internal/logger": "./source/@internal/logger",
           "@internal/pages": "./source/@internal/pages",
           "@internal/route": "./source/@internal/route",

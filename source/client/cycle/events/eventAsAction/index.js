@@ -1,9 +1,10 @@
 import mergeAllRight from "@unction/mergeallright"
 import inflateTree from "@unction/inflatetree"
 import mapValues from "@unction/mapvalues"
-import recordFromEntity from "@unction/recordfromentity"
+import flattenTree from "@unction/flattenTree"
 
-import fromDOMAttributes from "@unction/fromdomattributes"
+import onlySignal from "./onlySignal"
+import sliceDOMAttributes from "./sliceDOMAttributes"
 
 export default function eventAsAction (event) {
   return {
@@ -14,7 +15,7 @@ export default function eventAsAction (event) {
       )(
         mergeAllRight(
           mapValues(
-            fromDOMAttributes
+            flattenTree
           )(
             sliceDOMAttributes(event.target)
           )

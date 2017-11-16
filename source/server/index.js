@@ -6,7 +6,6 @@ import cors from "cors"
 import morgan from "morgan"
 import compression from "compression"
 import helmet from "helmet"
-import {replace} from "ramda"
 import bugsnag from "bugsnag"
 import snabbdomToHtml from "snabbdom-to-html"
 
