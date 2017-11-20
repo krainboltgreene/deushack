@@ -6,7 +6,7 @@ import flattenTree from "@unction/flattenTree"
 import onlySignal from "./onlySignal"
 import sliceDOMAttributes from "./sliceDOMAttributes"
 
-export default function eventAsAction (event) {
+export default function asAction (event) {
   return {
     event,
     ...onlySignal(

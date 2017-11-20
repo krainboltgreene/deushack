@@ -14,15 +14,7 @@
       "module-resolver",
       {
         "alias": {
-          "@internal/colors": "./source/@internal/colors",
-          "@internal/elements": "./source/@internal/elements",
-          "@internal/intents": "./source/@internal/intents",
-          "@internal/logger": "./source/@internal/logger",
-          "@internal/pages": "./source/@internal/pages",
-          "@internal/route": "./source/@internal/route",
-          "@internal/styles": "./source/@internal/styles",
-          "@internal/ui": "./source/@internal/ui",
-          "@internal/validations": "./source/@internal/validations"
+          "^@internal/(.+)$": "./source/@internal/\\1"
         }
       }
     ],

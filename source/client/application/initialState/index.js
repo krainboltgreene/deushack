@@ -1,4 +1,4 @@
-const homepage = ""
+const homepage = "/"
 
 export default function initialState () {
   return {

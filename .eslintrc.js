@@ -11,6 +11,11 @@ module.exports = {
     node: true,
     browser: true
   },
+  settings: {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  },
   rules: {
     "babel/new-cap": "error",
     "babel/no-invalid-this": "error",

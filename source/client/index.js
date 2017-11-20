@@ -1,16 +1,11 @@
 /* eslint-disable import/no-unassigned-import, immutable/no-mutation */
-
 import "babel-polyfill"
+
 import {run} from "@cycle/run"
-
-import environment from "./environment"
-import cycle from "./cycle"
+import application from "./application"
 import drivers from "./drivers"
+import environment from "./environment"
 
-global.window.env = environment(
-  [
-    ...document.querySelectorAll("meta[type='environment']"),
-  ]
-)
+global.window.env = environment()
 
-run(cycle, drivers)
+run(application, drivers)

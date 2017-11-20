@@ -12,6 +12,7 @@ const envify = require("envify")
 const vinylSourceStream = require("vinyl-source-stream")
 const vinylBuffer = require("vinyl-buffer")
 const gulpChanged = require("gulp-changed")
+const gulpGracefulError = require("gulp-graceful-error")
 const {production} = require("gulp-environments")
 
 const DESINATION = "./tmp/"
@@ -30,6 +31,7 @@ gulp.task("build:@internal", () => {
   return gulp.src([
     "./source/@internal/**/*.js",
   ])
+    .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
     .pipe(gulpBabel())
     .pipe(gulpSize({
@@ -37,6 +39,7 @@ gulp.task("build:@internal", () => {
       showFiles: true,
     }))
     .pipe(gulp.dest(destination))
+    .graceful()
 })
 
 gulp.task("build:server", [
@@ -47,6 +50,7 @@ gulp.task("build:server", [
   return gulp.src([
     "./source/server/**/*.js",
   ])
+    .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
     .pipe(gulpBabel())
     .pipe(gulpSize({
@@ -56,6 +60,7 @@ gulp.task("build:server", [
     .pipe(gulp.dest(destination))
     .pipe(production(gulpGzip(GZIP)))
     .pipe(production(gulp.dest(destination)))
+    .graceful()
 })
 
 gulp.task("build:client", [
@@ -77,7 +82,9 @@ gulp.task("build:client", [
     ],
   })
     .bundle()
+    .on("error", console.error)
     .pipe(vinylSourceStream("index.js"))
+    .pipe(gulpGracefulError())
     .pipe(vinylBuffer())
     .pipe(gulpSize({
       title: "client",
@@ -86,6 +93,7 @@ gulp.task("build:client", [
     .pipe(gulp.dest(destination))
     .pipe(production(gulp.dest(destination)))
     .pipe(production(gulpGzip(GZIP)))
+    .graceful()
 })
 
 gulp.task("build:styles", () => {
@@ -94,6 +102,7 @@ gulp.task("build:styles", () => {
   return gulp.src([
     "./source/assets/styles/*",
   ])
+    .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
     .pipe(gulpConcat("index.css"))
     .pipe(gulpMyth())
@@ -104,6 +113,7 @@ gulp.task("build:styles", () => {
     .pipe(gulp.dest(destination))
     .pipe(production(gulp.dest(destination)))
     .pipe(production(gulpGzip(GZIP)))
+    .graceful()
 })
 
 gulp.task("build:images", () => {
@@ -113,6 +123,7 @@ gulp.task("build:images", () => {
     "./source/assets/images/*.png",
     "./source/assets/images/*.ico",
   ])
+    .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
     .pipe(gulpSize({
       title: "images",
@@ -121,6 +132,7 @@ gulp.task("build:images", () => {
     .pipe(gulp.dest(destination))
     .pipe(production(gulpGzip(GZIP)))
     .pipe(production(gulp.dest(destination)))
+    .graceful()
 })
 gulp.task("build:fonts", () => {
   const destination = join(DESINATION, "client", "fonts")
@@ -128,6 +140,7 @@ gulp.task("build:fonts", () => {
   return gulp.src([
     "./node_modules/font-awesome/fonts/**/*",
   ])
+    .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
     .pipe(gulpSize({
       title: "fonts",
@@ -136,6 +149,7 @@ gulp.task("build:fonts", () => {
     .pipe(gulp.dest(destination))
     .pipe(production(gulpGzip(GZIP)))
     .pipe(production(gulp.dest(destination)))
+    .graceful()
 })
 
 gulp.task("build:assets", () => {
@@ -145,6 +159,7 @@ gulp.task("build:assets", () => {
     "./source/assets/metadata/*",
     "./source/assets/scripts/*.js",
   ])
+    .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
     .pipe(gulpSize({
       title: "assets",
@@ -153,11 +168,11 @@ gulp.task("build:assets", () => {
     .pipe(gulp.dest(destination))
     .pipe(production(gulpGzip(GZIP)))
     .pipe(production(gulp.dest(destination)))
+    .graceful()
 })
 
 gulp.task(
-  "build:all"
-  ,
+  "build:all",
   [
     "build:server",
     "build:client",
