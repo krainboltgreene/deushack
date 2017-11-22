@@ -34,7 +34,9 @@ application.use(helmet())
 application.use(express.static(join(__dirname, "..", "client")))
 
 application.get("*", (request, response) => {
-  return response.send(`<!DOCTYPE html>${snabbdomToHtml(shell())}`)
+  const initialState = {ephemeral: {location: {pathname: request.url}}}
+
+  return response.send(`<!DOCTYPE html>${snabbdomToHtml(shell()(initialState))}`)
 })
 
 application.listen(

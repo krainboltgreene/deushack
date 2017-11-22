@@ -95,7 +95,7 @@ export default function initialState () {
         },
       },
     },
-    ephemeral: {location: {page: homepage}},
+    ephemeral: {location: {pathname: homepage}},
     metadata: {},
   }
 }

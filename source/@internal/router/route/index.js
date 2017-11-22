@@ -8,7 +8,7 @@ import uriTemplates from "uri-templates"
 
 import * as pages from "@internal/pages"
 
-const template = uriTemplates("/{component}{/id}")
+const template = uriTemplates("/{slug}{/id}")
 const sessionKey = keyChain(
   [
     "ephemeral",
@@ -24,16 +24,23 @@ const pathnameKey = keyChain(
 )
 
 const {pageNotFound} = pages
+const {landingPage} = pages
 // const {loadingScreen} = pages
 // const {authenticationRequired} = pages
 
 export default function route (state) {
   // const session = sessionKey(state)
   const pathname = pathnameKey(state)
-  const component = key(pascal(template.fromUri(pathname).component))(pages)
+
+  if (pathname === "/" || pathname === "") {
+    return landingPage()
+  }
+  const {slug} = template.fromUri(pathname)
+  const name = pascal(slug)
+  const component = key(name)(pages)
 
   if (isNil(component)) {
-    return pageNotFound
+    return pageNotFound()
   }
 
   // if (component.clientSide && !global.window) {

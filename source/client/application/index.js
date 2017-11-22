@@ -20,7 +20,7 @@ export default function application (sources) {
   )
 
   return {
-    DOM: state.map(infuse(shell)),
+    DOM: state.map(infuse(shell())),
     storage: state.map(recordFrom("state")),
     history: state.map(navigation),
   }

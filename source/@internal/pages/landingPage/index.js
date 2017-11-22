@@ -1,3 +1,9 @@
+import {p} from "snabbdom-helpers"
+
+export default function landingPage () {
+  return p({inner: "This is the landing page."})
+}
+
 // import React from "react"
 // import cxs from "cxs"
 //

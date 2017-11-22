@@ -23,7 +23,7 @@ export default function shell () {
           body({
             inner: [
               main({
-                selector: "application",
+                selector: "#application",
                 inner: route(state),
               }),
               javascriptDisabledWarning(),
