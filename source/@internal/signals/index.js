@@ -1,11 +1,11 @@
 import mergeAllRight from "@unction/mergeallright"
 
-import domEvents from "./domEvents"
+import domActions from "./domActions"
 
 export default function signals (sources) {
   return mergeAllRight(
     [
-      domEvents(sources),
+      domActions(sources),
     ]
   )
 }
