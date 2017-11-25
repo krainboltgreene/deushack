@@ -7,10 +7,10 @@ import morgan from "morgan"
 import compression from "compression"
 import helmet from "helmet"
 import bugsnag from "bugsnag"
-import snabbdomToHtml from "snabbdom-to-html"
 
 import logger from "@internal/logger"
-import {shell} from "@internal/ui"
+
+import application from "./application"
 
 if (process.env.NODE_ENV === "production") {
   requireEnvironmentVariables([
@@ -25,21 +25,17 @@ requireEnvironmentVariables([
   "ORIGIN_LOCATION",
 ])
 
-const application = express()
+const server = express()
 
-application.use(cors())
-application.use(morgan("dev"))
-application.use(compression())
-application.use(helmet())
-application.use(express.static(join(__dirname, "..", "client")))
+server.use(cors())
+server.use(morgan("dev"))
+server.use(compression())
+server.use(helmet())
+server.use(express.static(join(__dirname, "..", "client")))
 
-application.get("*", (request, response) => {
-  const initialState = {ephemeral: {location: {pathname: request.url}}}
+server.get("*", application)
 
-  return response.send(`<!DOCTYPE html>${snabbdomToHtml(shell()(initialState))}`)
-})
-
-application.listen(
+server.listen(
   process.env.PORT,
   () => logger.info(`Listening to ${process.env.PORT}`)
 )

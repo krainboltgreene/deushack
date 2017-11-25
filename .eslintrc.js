@@ -152,7 +152,7 @@ module.exports = {
     "no-constant-condition": "error",
     "no-continue": "error",
     "no-control-regex": "error",
-    "no-debugger": "error",
+    "no-debugger": "off",
     "no-delete-var": "error",
     "no-div-regex": "error",
     "no-dupe-args": "error",

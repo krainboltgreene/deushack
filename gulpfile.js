@@ -84,7 +84,6 @@ gulp.task("build:client", [
     .bundle()
     .on("error", console.error)
     .pipe(vinylSourceStream("index.js"))
-    .pipe(gulpGracefulError())
     .pipe(vinylBuffer())
     .pipe(gulpSize({
       title: "client",
@@ -93,14 +92,13 @@ gulp.task("build:client", [
     .pipe(gulp.dest(destination))
     .pipe(production(gulp.dest(destination)))
     .pipe(production(gulpGzip(GZIP)))
-    .graceful()
 })
 
 gulp.task("build:styles", () => {
   const destination = join(DESINATION, "client")
 
   return gulp.src([
-    "./source/assets/styles/*",
+    "./source/assets/styles/**/*.css",
   ])
     .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
@@ -121,6 +119,7 @@ gulp.task("build:images", () => {
 
   return gulp.src([
     "./source/assets/images/*.png",
+    "./source/assets/images/*.jpg",
     "./source/assets/images/*.ico",
   ])
     .pipe(gulpGracefulError())
@@ -157,7 +156,7 @@ gulp.task("build:assets", () => {
 
   return gulp.src([
     "./source/assets/metadata/*",
-    "./source/assets/scripts/*.js",
+    "./source/assets/scripts/**/*.js",
   ])
     .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
@@ -185,16 +184,16 @@ gulp.task(
     "build:client",
   ],
   () => {
-    gulp.watch("./source/server/**/*", [
+    gulp.watch("source/server/**/*", [
       "build:server",
     ])
-    gulp.watch("./source/client/**/*", [
+    gulp.watch("source/client/**/*", [
       "build:client",
     ])
-    gulp.watch("./source/assets/**/*", [
+    gulp.watch("source/assets/**/*", [
       "build:client",
     ])
-    gulp.watch("./source/@internal/**/*", [
+    gulp.watch("source/@internal/**/*", [
       "build:server",
       "build:client",
     ])
