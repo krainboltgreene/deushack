@@ -1,14 +1,13 @@
 import {head} from "snabbdom-helpers"
 import {meta} from "snabbdom-helpers"
 import {title} from "snabbdom-helpers"
-import {style} from "snabbdom-helpers"
 import {script} from "snabbdom-helpers"
 import {link} from "snabbdom-helpers"
 import links from "./links"
 
 export default function metadata () {
   return head({
-    inner: [
+    children: [
       meta({attributes: {charset: "utf-8"}}),
       meta({
         attributes: {
@@ -22,7 +21,7 @@ export default function metadata () {
           content: "width=device-width, initial-scale=1, shrink-to-fit=no",
         },
       }),
-      title({inner: "deushack"}),
+      title({children: "deushack"}),
       ...links(
         [
           {
@@ -158,7 +157,6 @@ export default function metadata () {
           crossorigin: "anonymous",
         },
       }),
-      style({inner: "body {height: 100vh;}"}),
     ],
   })
 }

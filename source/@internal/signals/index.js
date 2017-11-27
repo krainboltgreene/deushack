@@ -7,5 +7,5 @@ export default function signals (sources) {
     [
       domActions(sources),
     ]
-  )
+  ).debug("signals")
 }

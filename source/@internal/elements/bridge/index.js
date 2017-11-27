@@ -18,8 +18,17 @@ export default function bridge (nodes) {
     const from = nodes[instance.relationships.from.data.id]
     const toPosition = to.meta.position
     const fromPosition = from.meta.position
-    const [x, y] = midpoint([toPosition, fromPosition])
-    const length = distance([toPosition, fromPosition])
+    const [
+      x,
+      y,
+    ] = midpoint([
+      toPosition,
+      fromPosition,
+    ])
+    const length = distance([
+      toPosition,
+      fromPosition,
+    ])
     const width = length - NODE_DIAMETER
     const top = x - HEIGHT / 2
     const left = y - width / 2
@@ -37,7 +46,10 @@ export default function bridge (nodes) {
         "position": "absolute",
         "top": px(top),
         "left": px(left),
-        "transform": rotate(slope([toPosition, fromPosition])),
+        "transform": rotate(slope([
+          toPosition,
+          fromPosition,
+        ])),
         "transform-origin": "center",
       },
       data: {
@@ -45,7 +57,7 @@ export default function bridge (nodes) {
         x,
         y,
       },
-      inner: h1({inner: `(${instance.attributes.level})`}),
+      children: h1({children: `(${instance.attributes.level})`}),
     })
   }
 }

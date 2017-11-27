@@ -1,3 +1,6 @@
 export default function initialState (request) {
-  return {ephemeral: {location: {pathname: request.url}}}
+  return {
+    resources: {},
+    ephemeral: {location: {pathname: request.url}},
+  }
 }

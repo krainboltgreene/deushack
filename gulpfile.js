@@ -13,6 +13,7 @@ const vinylSourceStream = require("vinyl-source-stream")
 const vinylBuffer = require("vinyl-buffer")
 const gulpChanged = require("gulp-changed")
 const gulpGracefulError = require("gulp-graceful-error")
+const gulpNotify = require("gulp-notify")
 const {production} = require("gulp-environments")
 
 const DESINATION = "./tmp/"
@@ -60,6 +61,7 @@ gulp.task("build:server", [
     .pipe(gulp.dest(destination))
     .pipe(production(gulpGzip(GZIP)))
     .pipe(production(gulp.dest(destination)))
+    .pipe(gulpNotify("build:server finished"))
     .graceful()
 })
 
@@ -73,6 +75,7 @@ gulp.task("build:client", [
 
   return browserify({
     entries: "./source/client/index.js",
+    debug: true,
     transform: [
       [
         babelify,
@@ -92,6 +95,7 @@ gulp.task("build:client", [
     .pipe(gulp.dest(destination))
     .pipe(production(gulp.dest(destination)))
     .pipe(production(gulpGzip(GZIP)))
+    .pipe(gulpNotify("build:client finished"))
 })
 
 gulp.task("build:styles", () => {

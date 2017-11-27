@@ -15,13 +15,13 @@ export default function shell () {
 
   return html({
     attributes: {lang: "en"},
-    inner: [
+    children: [
       metadata(),
       body({
-        inner: [
+        children: [
           main({
             selector: "#application",
-            inner: router(),
+            children: router(),
           }),
           javascriptDisabledWarning(),
           alternativeGoogleTagManager(),

@@ -7,6 +7,8 @@ import onlySignal from "./onlySignal"
 import sliceDOMAttributes from "./sliceDOMAttributes"
 
 export default function asAction (event) {
+  debugger
+
   return {
     event,
     ...onlySignal(
