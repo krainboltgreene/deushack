@@ -1,14 +1,26 @@
 import cycleState from "cycle-state"
+import {domSignals} from "cycle-signal"
+import mergeAllRight from "@unction/mergeallright"
 import * as intents from "@internal/intents"
 
 import initialState from "./initialState"
 
-export default function model (signals) {
+const eventTypes = [
+  "click",
+  "hover",
+  "input",
+  "submit",
+  "change",
+]
+
+export default function model (sources) {
   return cycleState(
     intents
   )(
     initialState()
   )(
-    signals
+    mergeAllRight([
+      domSignals(eventTypes)(sources),
+    ])
   ).debug("state")
 }

@@ -21,7 +21,10 @@ export default function shell () {
         children: [
           main({
             selector: "#application",
-            children: router(),
+            children: [
+              router(),
+              "test",
+            ],
           }),
           javascriptDisabledWarning(),
           alternativeGoogleTagManager(),

@@ -31,8 +31,7 @@ server.use(cors())
 server.use(morgan("dev"))
 server.use(compression())
 server.use(helmet())
-server.use(express.static(join(__dirname, "..", "client")))
-
+server.use(express.static("tmp/client"))
 server.get("*", application)
 
 server.listen(

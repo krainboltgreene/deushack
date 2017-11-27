@@ -14,6 +14,7 @@ const vinylBuffer = require("vinyl-buffer")
 const gulpChanged = require("gulp-changed")
 const gulpGracefulError = require("gulp-graceful-error")
 const gulpNotify = require("gulp-notify")
+const gulpSourcemaps = require("gulp-sourcemaps")
 const {production} = require("gulp-environments")
 
 const DESINATION = "./tmp/"
@@ -51,6 +52,7 @@ gulp.task("build:server", [
   return gulp.src([
     "./source/server/**/*.js",
   ])
+    .pipe(gulpSourcemaps.init())
     .pipe(gulpGracefulError())
     .pipe(gulpChanged(destination))
     .pipe(gulpBabel())
@@ -58,6 +60,7 @@ gulp.task("build:server", [
       title: "server",
       showFiles: true,
     }))
+    .pipe(gulpSourcemaps.write(destination))
     .pipe(gulp.dest(destination))
     .pipe(production(gulpGzip(GZIP)))
     .pipe(production(gulp.dest(destination)))
@@ -75,7 +78,7 @@ gulp.task("build:client", [
 
   return browserify({
     entries: "./source/client/index.js",
-    debug: true,
+    debug: false,
     transform: [
       [
         babelify,
@@ -188,16 +191,16 @@ gulp.task(
     "build:client",
   ],
   () => {
-    gulp.watch("source/server/**/*", [
+    gulp.watch("./source/server/**/*", [
       "build:server",
     ])
-    gulp.watch("source/client/**/*", [
+    gulp.watch("./source/client/**/*", [
       "build:client",
     ])
-    gulp.watch("source/assets/**/*", [
+    gulp.watch("./source/assets/**/*", [
       "build:client",
     ])
-    gulp.watch("source/@internal/**/*", [
+    gulp.watch("./source/@internal/**/*", [
       "build:server",
       "build:client",
     ])
