@@ -1,7 +1,7 @@
-import cycleState from "cycle-state"
-import {domSignals} from "cycle-signal"
+import {cycleState} from "cycle-state"
+import {domSignals} from "cycle-state"
 import mergeAllRight from "@unction/mergeallright"
-import * as intents from "@internal/intents"
+import * as reactions from "@internal/reactions"
 
 import initialState from "./initialState"
 
@@ -15,7 +15,7 @@ const eventTypes = [
 
 export default function model (sources) {
   return cycleState(
-    intents
+    reactions
   )(
     initialState()
   )(
