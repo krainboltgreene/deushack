@@ -92,6 +92,8 @@
     "compression": "1.7.1",
     "cors": "2.8.4",
     "cxs": "6.1.0",
+    "cycle-channel": "1.0.2",
+    "cycle-channel-dom": "1.0.0",
     "cycle-state": "1.7.1",
     "cyclejs-cookie": "0.7.4",
     "express": "4.16.2",
