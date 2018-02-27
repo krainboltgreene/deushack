@@ -21,9 +21,9 @@ export default function shell () {
         children: [
           main({
             selector: "#application",
+            data: {createdAt: new Date()},
             children: [
               router(),
-              "test",
             ],
           }),
           javascriptDisabledWarning(),
