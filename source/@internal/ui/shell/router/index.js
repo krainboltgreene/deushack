@@ -2,10 +2,11 @@
 
 import key from "@unction/key"
 import keyChain from "@unction/keychain"
-import {broadView} from "snabbdom-view"
 import {isNil} from "ramda"
 import {pascal} from "case"
 import uriTemplates from "uri-templates"
+import {section} from "snabbdom-helpers"
+import {broadView} from "snabbdom-view"
 
 import * as pages from "@internal/pages"
 
@@ -35,14 +36,14 @@ export default function router () {
     const pathname = pathnameKey(state)
 
     if (pathname === "/" || pathname === "") {
-      return landingPage()
+      return section({children: landingPage()})
     }
     const {slug} = template.fromUri(pathname)
     const name = pascal(slug)
     const component = key(name)(pages)
 
     if (isNil(component)) {
-      return pageNotFound()
+      return section({children: pageNotFound()})
     }
 
     // if (component.clientSide && !global.window) {
@@ -53,6 +54,6 @@ export default function router () {
     //   return authenticationRequired
     // }
 
-    return component()
+    return section({children: component()})
   })
 }
