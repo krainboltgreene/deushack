@@ -7,7 +7,7 @@ import {makeNotificationDriver} from "@cycle/notification"
 import {makeCookieDriver} from "cyclejs-cookie"
 
 export default {
-  DOM: makeDOMDriver("main#application"),
+  view: makeDOMDriver("main#application"),
   storage: storageDriver,
   history: makeHistoryDriver(),
   http: makeHTTPDriver(),
