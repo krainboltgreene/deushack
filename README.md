@@ -11,9 +11,9 @@ https://material.io/color/#!/?view.left=0&view.right=0&primary.color=F48FB1&seco
 
 ## todo
 
-  - Store/Read from storage in a reasonable manner
-  - Handle web notifications
-  - Handle cookies
-  - Make the express server handle static assets
-  - Setup browserify-hmr
-  - Setup cycle-restart
+  - [ ] Store/Read from storage in a reasonable manner
+  - [ ] Handle web notifications
+  - [ ] Handle cookies
+  - [ ] Make the express server handle static assets
+  - [ ] Setup browserify-hmr
+  - [ ] Setup cycle-restart
