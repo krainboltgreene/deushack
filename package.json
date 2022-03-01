@@ -117,6 +117,6 @@
     "snabbdom-view": "2.2.1",
     "store": "2.0.12",
     "uri-templates": "0.2.0",
-    "url-parse": "1.2.0"
+    "url-parse": "1.5.9"
   }
 }
